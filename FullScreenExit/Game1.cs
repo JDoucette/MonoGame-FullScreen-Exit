@@ -1,4 +1,13 @@
-﻿using Microsoft.Xna.Framework;
+﻿// Jason Allen Doucette
+// September 4, 2023
+//
+// Testing:
+//	-	Start in windowed mode
+//	-	Change to full screen mode
+//	-	Exit
+//	-	See if the app exits cleanly.
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -6,47 +15,48 @@ namespace FullScreenExit
 {
 	public class Game1 : Game
 	{
-		private GraphicsDeviceManager _graphics;
-		private SpriteBatch _spriteBatch;
+		private GraphicsDeviceManager graphicsDeviceManager;
+		//private SpriteBatch spriteBatch;
+		private KeyboardState keyStatePrev;
+		private KeyboardState keyStateCurr;
 
 		public Game1()
 		{
-			_graphics = new GraphicsDeviceManager(this);
+			graphicsDeviceManager = new GraphicsDeviceManager(this);
 			Content.RootDirectory = "Content";
 			IsMouseVisible = true;
 		}
 
 		protected override void Initialize()
 		{
-			// TODO: Add your initialization logic here
-
 			base.Initialize();
 		}
 
 		protected override void LoadContent()
 		{
-			_spriteBatch = new SpriteBatch(GraphicsDevice);
-
-			// TODO: use this.Content to load your game content here
+			//spriteBatch = new SpriteBatch(GraphicsDevice);
 		}
 
 		protected override void Update(GameTime gameTime)
 		{
-			if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+			keyStateCurr = Keyboard.GetState();
+			if (WasJustPressed(Keys.F))
+				graphicsDeviceManager.ToggleFullScreen();
+			if (WasJustPressed(Keys.Escape))
 				Exit();
-
-			// TODO: Add your update logic here
-
 			base.Update(gameTime);
+			keyStatePrev = keyStateCurr;
 		}
 
 		protected override void Draw(GameTime gameTime)
 		{
 			GraphicsDevice.Clear(Color.CornflowerBlue);
-
-			// TODO: Add your drawing code here
-
 			base.Draw(gameTime);
+		}
+
+		private bool WasJustPressed(Keys key)
+		{
+			return (keyStatePrev.IsKeyUp(key) && keyStateCurr.IsKeyDown(key));
 		}
 	}
 }
