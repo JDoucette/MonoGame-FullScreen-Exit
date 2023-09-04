@@ -1,11 +1,54 @@
 ﻿// Jason Allen Doucette
 // September 4, 2023
 //
-// Testing:
-//	-	Start in windowed mode
-//	-	Change to full screen mode
-//	-	Exit
-//	-	See if the app exits cleanly.
+// Version:
+//	-	MonoGame 3.8.1.303
+//
+// Repro:
+//	1.	Game starts in windowed mode
+//		(NOTE: if the game starts in full-screen, all is well.)
+//	2.	Press "F to toggle into full screen
+//		(NOTE: if the game is toggled back to windowed mode, all is well.)
+//	3.	Press "ESC" to exit the app while in full screen
+//
+// Result:
+//	-	When fullscreen mode is set, exit hangs.
+//		-	In Release mode: Task Manager moves the app from "Apps" to "Background processes"
+//		-	In Debug mode:
+
+/*
+THREADS:
+
+	16552	9	Worker Thread	.NET System Events	System.Private.CoreLib.dll!System.Threading.WaitHandle.WaitOneNoCheck
+	6940	4	Worker Thread	.NET ThreadPool Gate	System.Private.CoreLib.dll!System.Threading.WaitHandle.WaitOneNoCheck
+	12520	3	Worker Thread	.NET ThreadPool Worker	System.Private.CoreLib.dll!Interop.Kernel32.GetQueuedCompletionStatus
+	14468	5	Worker Thread	.NET ThreadPool Worker	System.Private.CoreLib.dll!Interop.Kernel32.GetQueuedCompletionStatus
+	14156	8	Worker Thread	.NET ThreadPool Worker	System.Private.CoreLib.dll!Interop.Kernel32.GetQueuedCompletionStatus
+	2532	0	Worker Thread	<No Name>	
+	18208	0	Worker Thread	<No Name>	
+	18512	0	Worker Thread	<No Name>	System.Private.CoreLib.dll!System.Threading.Thread.Join
+	11612	1	Main Thread	Main Thread	
+
+.NET SYSTEM EVENTS THREAD, CALL STACK:
+
+	16552	9	Worker Thread	.NET System Events	System.Private.CoreLib.dll!System.Threading.WaitHandle.WaitOneNoCheck
+
+	System.Private.CoreLib.dll!System.Threading.WaitHandle.WaitOneNoCheck(int millisecondsTimeout) Line 139	C#
+	System.Private.CoreLib.dll!System.Threading.WaitHandle.WaitOne(int millisecondsTimeout) Line 111	C#
+	System.Private.CoreLib.dll!System.Threading.WaitHandle.WaitOne(int millisecondsTimeout, bool exitContext) Line 421	C#
+	System.Windows.Forms.dll!System.Windows.Forms.Control.WaitForWaitHandle(System.Threading.WaitHandle waitHandle) Line 3896	C#
+	System.Windows.Forms.dll!System.Windows.Forms.Control.MarshaledInvoke(System.Windows.Forms.Control caller, System.Delegate method, object[] args, bool synchronous) Line 6979	C#
+	System.Windows.Forms.dll!System.Windows.Forms.Control.Invoke(System.Delegate method, object[] args) Line 6426	C#
+	System.Windows.Forms.dll!System.Windows.Forms.WindowsFormsSynchronizationContext.Send(System.Threading.SendOrPostCallback d, object state) Line 88	C#
+	Microsoft.Win32.SystemEvents.dll!Microsoft.Win32.SystemEvents.SystemEventInvokeInfo.Invoke(bool checkFinalization, object[] args)	Unknown
+	Microsoft.Win32.SystemEvents.dll!Microsoft.Win32.SystemEvents.RaiseEvent(bool checkFinalization, object key, object[] args)	Unknown
+	Microsoft.Win32.SystemEvents.dll!Microsoft.Win32.SystemEvents.OnUserPreferenceChanging(int msg, System.IntPtr wParam, System.IntPtr lParam)	Unknown
+	Microsoft.Win32.SystemEvents.dll!Microsoft.Win32.SystemEvents.WindowProc(System.IntPtr hWnd, int msg, System.IntPtr wParam, System.IntPtr lParam)	Unknown
+	[Native to Managed Transition]	
+	[Managed to Native Transition]	
+	Microsoft.Win32.SystemEvents.dll!Microsoft.Win32.SystemEvents.WindowThreadProc()	Unknown
+	System.Private.CoreLib.dll!System.Threading.Thread.StartCallback() Line 106	C#
+*/
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
