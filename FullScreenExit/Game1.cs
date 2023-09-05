@@ -3,6 +3,12 @@
 //
 // Version:
 //	-	MonoGame 3.8.1.303
+//	-	MonoGame.Framework.WindowsDX 3.8.1.303
+//
+// Reference Links:
+//	-	https://github.com/JDoucette/MonoGame-FullScreen-Exit
+//	-	https://github.com/MonoGame/MonoGame/issues/8063
+//	-	https://community.monogame.net/t/full-screen-from-windowed-hangs-on-exit/19361
 //
 // Repro:
 //	1.	Game starts in windowed mode
