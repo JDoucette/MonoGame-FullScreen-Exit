@@ -10,21 +10,20 @@
 //	-	https://github.com/MonoGame/MonoGame/issues/8063
 //	-	https://community.monogame.net/t/full-screen-from-windowed-hangs-on-exit/19361
 
-
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace FullScreenExit_DesktopGL
+namespace DesktopGL
 {
-	public class Game1 : Game
+	public class Game_DesktopGL : Game
 	{
 		private GraphicsDeviceManager graphicsDeviceManager;
 		//private SpriteBatch spriteBatch;
 		private KeyboardState keyStatePrev;
 		private KeyboardState keyStateCurr;
 
-		public Game1()
+		public Game_DesktopGL()
 		{
 			graphicsDeviceManager = new GraphicsDeviceManager(this);
 			Content.RootDirectory = "Content";

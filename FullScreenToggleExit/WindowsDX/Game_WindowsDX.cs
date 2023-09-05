@@ -60,16 +60,16 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace FullScreenExit_WindowsDX
+namespace WindowsDX
 {
-	public class Game1 : Game
+	public class Game_WindowsDX : Game
 	{
 		private GraphicsDeviceManager graphicsDeviceManager;
 		//private SpriteBatch spriteBatch;
 		private KeyboardState keyStatePrev;
 		private KeyboardState keyStateCurr;
 
-		public Game1()
+		public Game_WindowsDX()
 		{
 			graphicsDeviceManager = new GraphicsDeviceManager(this);
 			Content.RootDirectory = "Content";
