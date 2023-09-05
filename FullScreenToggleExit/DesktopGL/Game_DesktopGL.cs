@@ -9,6 +9,18 @@
 //	-	https://github.com/JDoucette/MonoGame-FullScreen-Exit
 //	-	https://github.com/MonoGame/MonoGame/issues/8063
 //	-	https://community.monogame.net/t/full-screen-from-windowed-hangs-on-exit/19361
+//
+// Repro:
+//	1.	Game starts in windowed mode
+//	2.	Press "F to toggle into full screen
+//	3.	Press "ESC" to exit the app while in full screen
+//
+// Result:
+//	-	GOOD:
+//		-	No hang on fullscreen exit.
+//		-	No double window during fullscreen.
+//	-	BAD:
+//		-	Other apps that are maximized are resized.
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

@@ -12,15 +12,19 @@
 //
 // Repro:
 //	1.	Game starts in windowed mode
-//		(NOTE: if the game starts in full-screen, all is well.)
 //	2.	Press "F to toggle into full screen
-//		(NOTE: if the game is toggled back to windowed mode, all is well.)
 //	3.	Press "ESC" to exit the app while in full screen
 //
+// (NOTE: if the game starts in full-screen, all is well.)
+//
 // Result:
-//	-	When fullscreen mode is set, exit hangs.
-//		-	In Release mode: Task Manager moves the app from "Apps" to "Background processes"
-//		-	In Debug mode:
+//	-	GOOD
+//		-	If returning to windowed mode, then exit, it works.
+//	-	BAD
+//		-	Other apps that are maximized are resized.
+//		-	On exit from fullscreen, it hangs
+//			-	In Release mode: Task Manager moves the app from "Apps" to "Background processes"
+//			-	In Debug mode:
 
 /*
 THREADS:
